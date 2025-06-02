@@ -1,1 +1,0 @@
-const a=()=>({formatDate(){return"zzz"},formatDateBetween(t){if(!t.start.formatted||!t.final.formatted)return"";let r=t.start.formatted,e=t.final.formatted;return`${r} and ${e}`},formatLocation(t){return[t.city,t.state,t.country].filter(r=>!!r).join(", ")}});export{a as u};
