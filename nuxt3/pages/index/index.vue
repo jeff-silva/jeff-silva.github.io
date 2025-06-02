@@ -1,72 +1,52 @@
 <template>
   <v-app theme="dark">
-    <v-navigation-drawer
-      rail permanent
-    >
+    <v-navigation-drawer rail permanent>
       <v-defaults-provider
         :defaults="{
           VBtn: { stacked: true, flat: true, size: 50 },
           VIcon: { size: 25 },
         }"
       >
-        <div class="h-100 d-flex align-center flex-column py-2" style="gap: 5px;">
+        <div class="h-100 d-flex align-center flex-column py-2" style="gap: 5px">
           <template v-for="id in ['contacts', 'skills', 'work', 'portfolio', null, 'bio']">
             <template v-if="id === null">
               <v-spacer />
             </template>
             <template v-else>
-              <v-tooltip :text="resume.sections[ id ]['title']">
+              <v-tooltip :text="resume.sections[id]['title']">
                 <template #activator="bind">
-                  <v-btn v-bind="bind.props" :to="resume.sections[ id ]['to']">
-                    <v-icon :icon="resume.sections[ id ]['icon']" />
+                  <v-btn v-bind="bind.props" :to="resume.sections[id]['to']">
+                    <v-icon :icon="resume.sections[id]['icon']" />
                   </v-btn>
                 </template>
               </v-tooltip>
-              <!-- <pre>{{ resume.sections[ id ]['title'] }}</pre> -->
             </template>
           </template>
-          <!-- <template v-for="o in resume.sections">
-            <template v-if="typeof o != 'object'">
-              <v-spacer />
-            </template>
-            <template v-else>
-              <v-tooltip :text="o.title">
-                <template #activator="bind">
-                  <v-btn v-bind="bind.props" @click="resume.section = o.id">
-                    <v-icon :icon="o.icon" />
-                  </v-btn>
-                </template>
-              </v-tooltip>
-            </template>
-          </template> -->
         </div>
       </v-defaults-provider>
     </v-navigation-drawer>
 
-    <!-- <v-navigation-drawer width="244">
-      aaa
-    </v-navigation-drawer> -->
-
     <v-main>
-      <div v-if="resume.ready" style="display: flex; flex-direction: column; height: 100vh; overflow: auto;">
+      <div v-if="resume.ready" style="display: flex; flex-direction: column; height: 100vh; overflow: auto">
         <div>
           <v-tabs density="compact" variant="tonal">
             <template v-for="o in resume.sections">
               <v-tab
-                v-if="typeof o=='object'"
+                v-if="typeof o == 'object'"
                 variant="tonal"
-                style="text-transform: none; font-size: 12px; color: #bbb;"
+                style="text-transform: none; font-size: 12px; color: #bbb"
                 :to="o.to"
-              >{{ o.filename }}</v-tab>
+                >{{ o.filename }}</v-tab
+              >
             </template>
           </v-tabs>
         </div>
 
-        <div style="flex-grow: 1; overflow: auto; position: relative;">
+        <div style="flex-grow: 1; overflow: auto; position: relative">
           <nuxt-page :resume="resume" />
         </div>
 
-        <div class="d-flex align-center pe-2" style="gap:10px; font-size:10px; color:#aaa;">
+        <div class="d-flex align-center pe-2" style="gap: 10px; font-size: 10px; color: #aaa">
           <div class="bg-teal pa-1">WSL: Ubuntu</div>
           <div class="d-flex">
             <v-icon icon="mingcute:git-branch-line" />
@@ -80,9 +60,7 @@
           <div>Spaces: 2</div>
           <div>UTF-8</div>
           <div>LF</div>
-          <div class="d-flex">
-            <v-icon icon="tdesign:check-double" /> &nbsp; Prettier
-          </div>
+          <div class="d-flex"><v-icon icon="tdesign:check-double" /> &nbsp; Prettier</div>
         </div>
       </div>
     </v-main>
@@ -93,7 +71,7 @@
 import { ref, reactive, computed } from "vue";
 import axios from "axios";
 
-import { useClipboard } from '@vueuse/core';
+import { useClipboard } from "@vueuse/core";
 const clipboard = useClipboard();
 
 import useVuetifyThemeSwitcher from "@/composables/useVuetifyThemeSwitcher";
@@ -101,21 +79,17 @@ const vuetifyThemeSwitcher = useVuetifyThemeSwitcher();
 
 const helper = reactive({
   formatDate() {
-    return 'zzz';
+    return "zzz";
   },
   formatDateBetween(date) {
-    if (!date.start.formatted) return '';
-    if (!date.final.formatted) return '';
+    if (!date.start.formatted) return "";
+    if (!date.final.formatted) return "";
     let start = date.start.formatted;
     let final = date.final.formatted;
     return `${start} and ${final}`;
   },
   formatLocation(location) {
-    return [
-      location.city,
-      location.state,
-      location.country,
-    ].filter(v => !!v).join(', ');
+    return [location.city, location.state, location.country].filter((v) => !!v).join(", ");
   },
 });
 
@@ -123,6 +97,17 @@ const resume = reactive({
   ready: false,
   data: false,
   async load() {
+    try {
+      const resp = await axios({
+        method: "get",
+        url: "https://raw.githubusercontent.com/jeff-silva/jeff-silva/main/data/jeferson-silva.json",
+      });
+
+      resume.data = resp.data;
+    } catch (err) {}
+    resume.ready = true;
+
+    /*
     try {
       let { data } = await axios.get(
         "https://raw.githubusercontent.com/jeff-silva/jeff-silva/main/data/jeferson-silva.json"
@@ -141,67 +126,70 @@ const resume = reactive({
       // projectImages.open(resume.data.projects[0].meta.images[0]);
     } catch (err) {}
     resume.ready = true;
+    */
   },
   projectsImages: computed(() => {
     let projectsImages = [];
 
-    resume.data.projects.map((project) => {
-      project.images.map((image) => {
-        projectsImages.push({ image, project });
-      });
-    });
+    // resume.data.projects.map((project) => {
+    //   project.images.map((image) => {
+    //     projectsImages.push({ image, project });
+    //   });
+    // });
 
     return projectsImages;
   }),
-  rating(stars, size=10) {
+  rating(stars, size = 10) {
     // const full = 'material-symbols-light:kid-star';
     // const empty = 'material-symbols-light:kid-star-outline';
-    stars = (stars || 0) / 100 * size;
-    return [ ...Array(size).keys() ].map((value) => {
+    stars = ((stars || 0) / 100) * size;
+    return [...Array(size).keys()].map((value) => {
       value++;
       const checked = value <= stars;
       return { value, checked };
     });
   },
   clipboardText: null,
-  section: 'bio',
-  sections: {
-    bio: {
-      to: '/',
-      title: 'Bio',
-      filename: 'bio.js',
-      icon: 'material-symbols:person-2-outline',
-    },
-    contacts: {
-      to: '/contacts',
-      title: 'Contatos',
-      filename: 'contacts.md',
-      icon: 'material-symbols:contact-mail-outline',
-    },
-    skills: {
-      to: '/skills',
-      title: 'Skills',
-      filename: 'skills.md',
-      icon: 'streamline:interface-favorite-star-reward-rating-rate-social-star-media-favorite-like-stars',
-    },
-    work: {
-      to: '/work',
-      title: 'Experiência',
-      filename: 'work.md',
-      icon: 'fa6-solid:timeline',
-    },
-    portfolio: {
-      to: '/portfolio',
-      title: 'Portfolio',
-      filename: 'portfolio.md',
-      icon: 'bytesize:portfolio',
-    },
-    // settings: {
-    //   title: 'Settings',
-    //   filename: 'settings.js',
-    //   icon: 'tabler:settings',
-    // },
-  },
+  section: "bio",
+  sections: computed(() => {
+    return {
+      bio: {
+        to: "/",
+        title: "Bio",
+        filename: "bio.js",
+        icon: "material-symbols:person-2-outline",
+      },
+      contacts: {
+        to: "/contacts",
+        title: "Contatos",
+        filename: "contacts.md",
+        icon: "material-symbols:contact-mail-outline",
+      },
+      skills: {
+        to: "/skills",
+        title: "Skills",
+        filename: "skills.md",
+        icon: "streamline:interface-favorite-star-reward-rating-rate-social-star-media-favorite-like-stars",
+      },
+      work: {
+        to: "/work",
+        title: "Experiência",
+        filename: "work.md",
+        icon: "fa6-solid:timeline",
+      },
+      portfolio: {
+        to: "/portfolio",
+        title: "Portfolio",
+        filename: "portfolio.md",
+        icon: "bytesize:portfolio",
+      },
+      // settings: {
+      //   title: 'Settings',
+      //   filename: 'settings.js',
+      //   icon: 'tabler:settings',
+      // },
+    };
+  }),
 });
 
 const projectsModal = ref(null);
