@@ -1,1 +1,0 @@
-import{_ as t}from"./nuxt-layout.03693eed.js";import{_ as n,v as o,z as a,A as _,t as c,B as r}from"./entry.f51d2f2a.js";const s={};function m(i,d){const e=t;return c(),o("div",null,[a(e,{name:"admin"},{main:_(()=>[r(" Home ")]),_:1})])}const l=n(s,[["render",m]]);export{l as default};
