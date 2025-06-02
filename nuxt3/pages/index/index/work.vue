@@ -7,7 +7,7 @@
           <div class="border-t my-6"></div>
           <h3>{{ o.position }} | {{ o.name }}</h3>
           <div>{{ helper.formatDateBetween(o.startDate, o.endDate) }}</div>
-          <small v-if="o.summary" v-html="o.summary" class="d-block mt-2"></small>
+          <small v-if="o.summary" v-html="helper.markdownToHtml(o.summary)" class="d-block mt-2"></small>
         </div>
       </template>
     </div>
