@@ -2,7 +2,7 @@
 
 rm -rf ./docs
 
-docker compose run --rm docs sh -c '
+docker compose run --rm frontend sh -c '
 {
   yarn install;
   yarn generate;

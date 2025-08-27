@@ -24,7 +24,7 @@
         }"
       />
       <br />
-      <div v-html="h.markdownToHtml(resume.data.basics.summary)"></div>
+      <div v-html="h.markdownToHtml(resume.data.basics.summary)" class="ps-4"></div>
     </v-container>
   </div>
 </template>

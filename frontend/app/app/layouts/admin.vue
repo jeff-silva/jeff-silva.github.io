@@ -66,13 +66,6 @@ const currentInstance = getCurrentInstance();
 import useVuetifyThemeSwitcher from "@/composables/useVuetifyThemeSwitcher";
 const vuetifyThemeSwitcher = useVuetifyThemeSwitcher();
 
-import useFireAuth from "@/composables/useFireAuth";
-const auth = await useFireAuth();
-
-auth.on("authChange", () => {
-  currentInstance.ctx.$refs.appLayoutRef.view.set(auth.user ? "admin" : "login");
-});
-
 const nav = reactive({
   drawer: null,
   items: [
@@ -82,8 +75,4 @@ const nav = reactive({
     { title: "Test", to: "/admin/test" },
   ],
 });
-
-// onMounted(() => {
-//   console.log(currentInstance.ctx.$refs.appLayoutRef);
-// });
 </script>

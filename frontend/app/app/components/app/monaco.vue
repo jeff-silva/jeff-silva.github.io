@@ -1,5 +1,5 @@
 <template>
-  <div ref="monacoRef" style="min-height: 50px"></div>
+  <div ref="monacoRef" class="app-monaco" style="min-height: 50px"></div>
 </template>
 
 <script setup>
@@ -87,3 +87,10 @@ useHead({
   ],
 });
 </script>
+
+<style>
+.app-monaco .monaco-editor {
+  outline: none !important;
+  /* background: red !important; */
+}
+</style>

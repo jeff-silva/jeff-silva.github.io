@@ -6,6 +6,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "bash ./bin/dev.sh",
-    "build": "bash ./bin/build.sh"
+    "build": "bash ./frontend/build.sh"
   }
 }

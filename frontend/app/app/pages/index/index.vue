@@ -100,7 +100,7 @@ const resume = reactive({
     try {
       const resp = await axios({
         method: "get",
-        url: "https://jeff-silva.github.io/jeff-silva/jeferson-silva.json",
+        url: "https://jeff-silva.github.io/jeff-silva/profiles/fullstack-dev/resume.json",
       });
 
       resume.data = resp.data;
@@ -133,8 +133,6 @@ const resume = reactive({
     return projectsImages;
   }),
   rating(stars, size = 10) {
-    // const full = 'material-symbols-light:kid-star';
-    // const empty = 'material-symbols-light:kid-star-outline';
     stars = ((stars || 0) / 100) * size;
     return [...Array(size).keys()].map((value) => {
       value++;
@@ -176,16 +174,9 @@ const resume = reactive({
         filename: "portfolio.md",
         icon: "bytesize:portfolio",
       },
-      // settings: {
-      //   title: 'Settings',
-      //   filename: 'settings.js',
-      //   icon: 'tabler:settings',
-      // },
     };
   }),
 });
-
-const projectsModal = ref(null);
 
 const menu = reactive({
   show: false,
