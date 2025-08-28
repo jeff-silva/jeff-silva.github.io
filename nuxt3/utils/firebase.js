@@ -131,7 +131,6 @@ export default class {
     const storage = fireStorage.getStorage();
     const fileRef = fireStorage.ref(storage, data.name);
     fireStorage.uploadBytes(fileRef, file);
-    console.log(data, file);
   }
 
   static async storageFind() {}

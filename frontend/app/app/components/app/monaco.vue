@@ -37,12 +37,82 @@ const app = reactive({
       $emit("update:modelValue", editor.getValue());
       app.monacoResize();
     });
+    app.themeInit();
   },
   monacoResize() {
     const opts = monacoOptions.value;
     const width = monacoRef.value.offsetWidth;
     const height = editor.getModel().getLineCount() * opts.lineHeight;
     editor.layout({ width, height });
+  },
+
+  // https://github.com/brijeshb42/monaco-themes/blob/master/themes/themelist.json
+  themes: {
+    active4d: "Active4D",
+    "all-hallows-eve": "All Hallows Eve",
+    amy: "Amy",
+    "birds-of-paradise": "Birds of Paradise",
+    blackboard: "Blackboard",
+    "brilliance-black": "Brilliance Black",
+    "brilliance-dull": "Brilliance Dull",
+    "chrome-devtools": "Chrome DevTools",
+    "clouds-midnight": "Clouds Midnight",
+    clouds: "Clouds",
+    cobalt: "Cobalt",
+    cobalt2: "Cobalt2",
+    dawn: "Dawn",
+    dracula: "Dracula",
+    dreamweaver: "Dreamweaver",
+    eiffel: "Eiffel",
+    "espresso-libre": "Espresso Libre",
+    "github-dark": "GitHub Dark",
+    "github-light": "GitHub Light",
+    github: "GitHub",
+    idle: "IDLE",
+    katzenmilch: "Katzenmilch",
+    "kuroir-theme": "Kuroir Theme",
+    lazy: "LAZY",
+    "magicwb--amiga-": "MagicWB (Amiga)",
+    "merbivore-soft": "Merbivore Soft",
+    merbivore: "Merbivore",
+    "monokai-bright": "Monokai Bright",
+    monokai: "Monokai",
+    "night-owl": "Night Owl",
+    nord: "Nord",
+    "oceanic-next": "Oceanic Next",
+    "pastels-on-dark": "Pastels on Dark",
+    "slush-and-poppies": "Slush and Poppies",
+    "solarized-dark": "Solarized-dark",
+    "solarized-light": "Solarized-light",
+    spacecadet: "SpaceCadet",
+    sunburst: "Sunburst",
+    "textmate--mac-classic-": "Textmate (Mac Classic)",
+    "tomorrow-night-blue": "Tomorrow-Night-Blue",
+    "tomorrow-night-bright": "Tomorrow-Night-Bright",
+    "tomorrow-night-eighties": "Tomorrow-Night-Eighties",
+    "tomorrow-night": "Tomorrow-Night",
+    tomorrow: "Tomorrow",
+    twilight: "Twilight",
+    "upstream-sunburst": "Upstream Sunburst",
+    "vibrant-ink": "Vibrant Ink",
+    "xcode-default": "Xcode_default",
+    zenburnesque: "Zenburnesque",
+    iplastic: "iPlastic",
+    idlefingers: "idleFingers",
+    krtheme: "krTheme",
+    monoindustrial: "monoindustrial",
+  },
+
+  themeInit() {
+    const theme = app.themes[monacoOptions.value.theme] || null;
+    if (!theme) return;
+    fetch(`https://raw.githubusercontent.com/brijeshb42/monaco-themes/refs/heads/master/themes/${theme}.json`).then(
+      async (resp) => {
+        const themeData = await resp.json();
+        monaco.editor.defineTheme("custom", themeData);
+        monaco.editor.setTheme("custom");
+      }
+    );
   },
 });
 
@@ -91,6 +161,5 @@ useHead({
 <style>
 .app-monaco .monaco-editor {
   outline: none !important;
-  /* background: red !important; */
 }
 </style>

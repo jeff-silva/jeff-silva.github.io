@@ -82,8 +82,4 @@ const nav = reactive({
     { title: "Test", to: "/admin/test" },
   ],
 });
-
-// onMounted(() => {
-//   console.log(currentInstance.ctx.$refs.appLayoutRef);
-// });
 </script>

@@ -19,8 +19,15 @@
         "
         :options="{
           language: 'javascript',
+          theme: 'twilight', // clouds-midnight, github-dark, merbivore-soft, merbivore, twilight
           readOnly: true,
+          domReadOnly: true,
           wordWrap: 'on',
+          renderLineHighlight: 'none',
+          renderValidationDecorations: 'off',
+          renderLineHighlightOnlyWhenFocus: true,
+          occurrencesHighlight: false,
+          selectionHighlight: false,
         }"
       />
       <br />

@@ -29,6 +29,36 @@
         <v-chip>{{ o.name }}</v-chip>
       </template>
     </div>
+
+    <!-- <app-monaco
+      style="width: 100%; min-height: 200px"
+      :model-value="
+        [
+          `\n`,
+          `const skills = `,
+          JSON.stringify(
+            resume.data.skills.map((o) => {
+              return o.name;
+            }),
+            null,
+            2
+          ),
+          `;`,
+        ].join(``)
+      "
+      :options="{
+        language: 'javascript',
+        theme: 'twilight', // clouds-midnight, github-dark, merbivore-soft, merbivore, twilight
+        readOnly: true,
+        domReadOnly: true,
+        wordWrap: 'on',
+        renderLineHighlight: 'none',
+        renderValidationDecorations: 'off',
+        renderLineHighlightOnlyWhenFocus: true,
+        occurrencesHighlight: false,
+        selectionHighlight: false,
+      }"
+    /> -->
   </v-container>
 </template>
 
