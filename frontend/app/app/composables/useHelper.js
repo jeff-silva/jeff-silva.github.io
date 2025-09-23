@@ -28,7 +28,10 @@ export default () => {
       return [location.city, location.state, location.country].filter((v) => !!v).join(", ");
     },
     markdownToHtml(content) {
-      return textile(content);
+      content = content.replace(/\n +/g, `\n`);
+      content = content.replace(/\n\n/g, `\n\n<br />\n\n`);
+      content = textile(content);
+      return content;
     },
   };
 };
