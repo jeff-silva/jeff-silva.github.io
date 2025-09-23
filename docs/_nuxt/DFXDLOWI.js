@@ -1,1 +1,0 @@
-import{P as t}from"./CoK28Vpc.js";const o=t({class:[String,Array,Object],style:{type:[String,Array,Object],default:null}},"component"),r=t({tag:{type:[String,Object,Function],default:"div"}},"tag");export{o as a,r as m};
